@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../../../comon_widgets/relegious_list_tile.dart';
@@ -16,11 +17,15 @@ class _Tab6State extends State<Tab6> {
     return ListView.builder(
         itemCount: 15,
         itemBuilder: (context, index) {
-          return RelegiousListTile(
-            onTap: () {},
-            title: "",
-            subTitle: "",
-            date: "",
+          return FadeInRightBig(
+            delay: Duration(milliseconds: 800),
+            curve: Curves.easeIn,
+            child: RelegiousListTile(
+              onTap: () {},
+              title: "here the header",
+              subTitle: " here is the body",
+              date: "the date",
+            ),
           );
         });
   }

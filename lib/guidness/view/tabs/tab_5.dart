@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../../../comon_widgets/relegious_list_tile.dart';
@@ -8,6 +9,7 @@ class Tab5 extends StatefulWidget {
   @override
   State<Tab5> createState() => _Tab5State();
 }
+
 //الاحرام
 class _Tab5State extends State<Tab5> {
   @override
@@ -15,11 +17,15 @@ class _Tab5State extends State<Tab5> {
     return ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return RelegiousListTile(
-            onTap: () {},
-            title: "",
-            subTitle: "",
-            date: "",
+          return ZoomIn(
+            delay: Duration(milliseconds: 800),
+            curve: Curves.easeIn,
+            child: RelegiousListTile(
+              onTap: () {},
+              title: "here the header",
+              subTitle: "here is the body",
+              date: "the date",
+            ),
           );
         });
   }

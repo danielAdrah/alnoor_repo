@@ -175,7 +175,9 @@ void _showAlertDialog(BuildContext context) {
                   child: Column(
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => ManagmentChat());
+                          },
                           icon: Image.asset("assets/img/chatIcon.png")),
                       const SizedBox(height: 5),
                       Text("دردشة مع الإدارة"),
@@ -194,7 +196,9 @@ void _showAlertDialog(BuildContext context) {
                   child: Column(
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => SupportChat());
+                          },
                           icon: Image.asset("assets/img/supportIcon.png")),
                       const SizedBox(height: 5),
                       Text("دردشة مع المرشد"),

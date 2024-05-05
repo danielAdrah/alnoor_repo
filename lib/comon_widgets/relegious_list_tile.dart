@@ -7,7 +7,12 @@ class RelegiousListTile extends StatefulWidget {
   final String title;
   final String subTitle;
   final String date;
-  RelegiousListTile({super.key, required this.onTap, required this.title, required this.subTitle, required this.date});
+  RelegiousListTile(
+      {super.key,
+      required this.onTap,
+      required this.title,
+      required this.subTitle,
+      required this.date});
 
   @override
   State<RelegiousListTile> createState() => _RelegiousListTileState();
@@ -20,7 +25,8 @@ class _RelegiousListTileState extends State<RelegiousListTile> {
       onTap: widget.onTap,
       child: Container(
         margin: const EdgeInsets.all(5),
-        padding: const EdgeInsets.all(20),
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, bottom: 10, top: 10),
         decoration: BoxDecoration(
             border: Border.all(color: TColor.black.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(15)),
@@ -31,9 +37,9 @@ class _RelegiousListTileState extends State<RelegiousListTile> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  widget.title
-,
-                  style:const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  widget.title,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 Text(
                   widget.subTitle,
@@ -41,8 +47,8 @@ class _RelegiousListTileState extends State<RelegiousListTile> {
                       fontSize: 9, color: TColor.black.withOpacity(0.3)),
                 ),
                 Text(
-                 widget.date,
-                  style:const TextStyle(color: TColor.primary, fontSize: 12),
+                  widget.date,
+                  style: const TextStyle(color: TColor.primary, fontSize: 10),
                 ),
               ],
             ),

@@ -47,30 +47,30 @@ class _CampRegister2State extends State<CampRegister2> {
         body: ListView(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Center(
-            //     child: FadeInDown(
-            //   delay: const Duration(milliseconds: 500),
-            //   child: const Image(
-            //     image: AssetImage("assets/img/logo.png"),
-            //     height: 120,
-            //     width: 120,
-            //   ),
-            // )),
-            // Text(
-            //   "التسجيل في حملة النور عام\n 1445",
-            //   style: TextStyle(
-            //       color: TColor.primary,
-            //       fontWeight: FontWeight.bold,
-            //       fontSize: media.width * 0.055),
-            //   textAlign: TextAlign.center,
-            // ),
-            // const SizedBox(height: 10),
-            // const Center(
-            //     child: Text(
-            //   "  الحالة الاجتماعية",
-            //   style: TextStyle(fontWeight: FontWeight.bold),
-            // )),
-            // const SizedBox(height: 50),
+            Center(
+                child: FadeInDown(
+              delay: const Duration(milliseconds: 500),
+              child: const Image(
+                image: AssetImage("assets/img/logo.png"),
+                height: 120,
+                width: 120,
+              ),
+            )),
+            Text(
+              "التسجيل في حملة النور عام\n 1445",
+              style: TextStyle(
+                  color: TColor.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: media.width * 0.055),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            const Center(
+                child: Text(
+              "  الحالة الاجتماعية",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+            const SizedBox(height: 50),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
