@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_1.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_2.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_3.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_4.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_5.dart';
-import 'package:elnoor_haj/guidness/view/tabs/tab_6.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_1.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_2.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_3.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_4.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_5.dart';
+import 'package:elnoor_haj/guidnace/view/tabs/tab_6.dart';
 import 'package:flutter/material.dart';
 
 import '../../comon_widgets/custom_app_bar.dart';
@@ -66,12 +66,12 @@ class _RelegiousGuidnessState extends State<RelegiousGuidness> {
                 const SizedBox(height: 20),
                 const Expanded(
                   child: TabBarView(children: [
-                    Tab1(),
-                    Tab2(),
-                    Tab3(),
-                    Tab4(),
-                    Tab5(),
-                    Tab6(),
+                    Tab1(category: "التحلل"),
+                    Tab2(category: "الاضطباع"),
+                    Tab3(category: "السعي"),
+                    Tab4(category: "الطواف"),
+                    Tab5(category: "الإحرام"),
+                    Tab6(category: "النية"),
                   ]),
                 ),
               ],

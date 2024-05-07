@@ -76,8 +76,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     ),
                     const SizedBox(height: 11),
                     NumberTextField(
+                      controller: TextEditingController(),
                       labelText: "ادخل رقم جوالك",
-                      onChanged: (phoneNumber){},
+                      // onChanged: (phoneNumber) {},
                     ),
                     FadeInRight(
                       delay: Duration(milliseconds: 700),

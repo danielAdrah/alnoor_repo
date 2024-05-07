@@ -1,12 +1,16 @@
+import 'dart:ffi';
+
 import 'package:animate_do/animate_do.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../comon_widgets/custom_app_bar.dart';
 import '../../comon_widgets/step_circle.dart';
+import '../../core/api/dio_consumer.dart';
 import '../../theme.dart';
 
-import '../model/main_screen_controller.dart';
+import '../controller/main_screen_controller.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,7 +20,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  MainScreenController controller = Get.put(MainScreenController());
+  MainScreenController controller =
+      Get.put(MainScreenController(api: DioConsumer(dio: Dio())));
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: media.width * 0.026),
                 child: ZoomIn(
-                  delay: Duration(milliseconds: 700),
+                  delay: const Duration(milliseconds: 700),
                   curve: Curves.decelerate,
                   child: Container(
                     width: double.infinity,
@@ -164,13 +169,13 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FadeInRight(
-                    delay: Duration(milliseconds: 700),
-                    child: Text(
+                    delay: const Duration(milliseconds: 700),
+                    child: const Text(
                       "خط السير",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                 ],
               ),
               const SizedBox(height: 20),
@@ -187,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     FadeInRight(
-                      delay: Duration(milliseconds: 700),
+                      delay: const Duration(milliseconds: 700),
                       child: Column(
                         children: [
                           Align(
@@ -227,7 +232,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     FadeInLeft(
-                      delay: Duration(milliseconds: 700),
+                      delay: const Duration(milliseconds: 700),
                       child: Column(
                         children: [
                           Align(
@@ -262,7 +267,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     FadeInRight(
-                      delay: Duration(milliseconds: 700),
+                      delay: const Duration(milliseconds: 700),
                       child: Column(
                         children: [
                           Align(
@@ -288,7 +293,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     FadeInLeft(
-                      delay: Duration(milliseconds: 700),
+                      delay: const Duration(milliseconds: 700),
                       child: Column(
                         children: [
                           Align(
@@ -323,4 +328,37 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+
+  // void Function()? onPressed;
+
+  // void showDialog(onPressed) {
+  //   Get.defaultDialog(
+  //     backgroundColor:
+  //         Colors.transparent, // Make the dialog background transparent
+  //     // barrierColor: Colors.black.withOpacity(0.5), // Optional: Adjust the opacity of the barrier color
+  //     title: "Choose an Option",
+  //     content: Material(
+  //       color: Colors.transparent, // Make the Material widget transparent
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           TextButton(
+  //             onPressed: () {
+  //               onPressed;
+  //               Get.back(); // Close the dialog
+  //             },
+  //             child: Text("Toggle isDoneIhram"),
+  //           ),
+  //           // Add more buttons as needed
+  //         ],
+  //       ),
+  //     ),
+  //     confirm: TextButton(
+  //       onPressed: () {
+  //         Get.back(); // Close the dialog
+  //       },
+  //       child: Text("Close"),
+  //     ),
+  //   );
+  // }
 }

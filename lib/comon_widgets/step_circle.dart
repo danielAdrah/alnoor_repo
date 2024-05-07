@@ -5,7 +5,7 @@ import '../theme.dart';
 class StepCircle extends StatelessWidget {
   String index;
   String title;
-  void Function()? onTap;
+  Function()? onTap;
   StepCircle(
       {super.key,
       required this.index,

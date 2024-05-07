@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:animate_do/animate_do.dart';
 import 'package:elnoor_haj/theme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dio/dio.dart';
 import '../../comon_widgets/custom_app_bar.dart';
 
 class SeekingCounterView extends StatefulWidget {

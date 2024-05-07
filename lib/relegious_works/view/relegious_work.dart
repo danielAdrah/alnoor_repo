@@ -66,12 +66,12 @@ class _RelegiousWorkState extends State<RelegiousWork> {
                 const SizedBox(height: 20),
                 const Expanded(
                   child: TabBarView(children: [
-                    Tab1(),
-                    Tab2(),
-                    Tab3(),
-                    Tab4(),
-                    Tab5(),
-                    Tab6()
+                    Tab1(categoryName: "التحلل"),
+                    Tab2(categoryName: "الاضطباع"),
+                    Tab3(categoryName: "السعي"),
+                    Tab4(categoryName: "الطواف"),
+                    Tab5(categoryName: "الإحرام"),
+                    Tab6(categoryName: "النية")
                   ]),
                 ),
               ],

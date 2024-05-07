@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../campen_register/view/camp_register.dart';
 import '../../comon_widgets/icon_primary_button.dart';
+import '../../main_tab_view/view/main_tab_view.dart';
 import '../../theme.dart';
 import '../onboarding_model/onboarding_design.dart';
 import 'package:animate_do/animate_do.dart';
@@ -103,7 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 delay: Duration(milliseconds: 600),
                                 child: IconPrimaryButton(
                                   onTap: () {
-                                    Get.to(CampRegister());
+                                    // Get.to(CampRegister());
+                                    Get.to(MainTabView());
                                   },
                                   text: "بدء",
                                   icon: Icons.arrow_forward,

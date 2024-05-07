@@ -5,14 +5,16 @@ import '../theme.dart';
 class RelegiousListTile extends StatefulWidget {
   void Function()? onTap;
   final String title;
+  final String image;
   final String subTitle;
-  final String date;
+  final DateTime date;
   RelegiousListTile(
       {super.key,
       required this.onTap,
       required this.title,
       required this.subTitle,
-      required this.date});
+      required this.date,
+      required this.image});
 
   @override
   State<RelegiousListTile> createState() => _RelegiousListTileState();
@@ -25,8 +27,13 @@ class _RelegiousListTileState extends State<RelegiousListTile> {
       onTap: widget.onTap,
       child: Container(
         margin: const EdgeInsets.all(5),
-        padding:
-            const EdgeInsets.only(right: 20, left: 20, bottom: 10, top: 10),
+        padding: const EdgeInsets.only(
+          right: 5,
+          // right: 20,
+          // left: 20,
+          // bottom: 10,
+          // top: 10,
+        ),
         decoration: BoxDecoration(
             border: Border.all(color: TColor.black.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(15)),
@@ -44,17 +51,17 @@ class _RelegiousListTileState extends State<RelegiousListTile> {
                 Text(
                   widget.subTitle,
                   style: TextStyle(
-                      fontSize: 9, color: TColor.black.withOpacity(0.3)),
+                      fontSize: 10, color: TColor.black.withOpacity(0.3)),
                 ),
                 Text(
-                  widget.date,
+                  widget.date.toString().substring(0, 11),
                   style: const TextStyle(color: TColor.primary, fontSize: 10),
                 ),
               ],
             ),
             const SizedBox(width: 10),
             // here we will put the image from the api
-            Image(image: AssetImage("assets/img/alqublah_mini.png"))
+            Expanded(child: Image(image: NetworkImage(widget.image)))
           ],
         ),
         // ListTile(

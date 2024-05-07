@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import '../../../comon_widgets/relegious_list_tile.dart';
 import '../../../core/api/dio_consumer.dart';
 import '../../../theme.dart';
-import '../../controller/religous_post_controller.dart';
-import '../indivicual_post.dart';
+import '../../controller/guidnace_controller.dart';
 
 class Tab1 extends StatefulWidget {
-  final String categoryName;
-  const Tab1({super.key, required this.categoryName});
+  final String category;
+  const Tab1({super.key, required this.category});
 
   @override
   State<Tab1> createState() => _Tab1State();
@@ -19,12 +18,12 @@ class Tab1 extends StatefulWidget {
 
 //التحلل
 class _Tab1State extends State<Tab1> {
-  ReligousPostController controller =
-      Get.put(ReligousPostController(api: DioConsumer(dio: Dio())));
+  GuidnaceController controller =
+      Get.put(GuidnaceController(api: DioConsumer(dio: Dio())));
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: controller.getPost(widget.categoryName),
+        future: controller.getGuidPost(widget.category),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -39,23 +38,18 @@ class _Tab1State extends State<Tab1> {
                 itemBuilder: (context, index) {
                   var data = snapshot.data![index];
                   return ZoomIn(
-                    delay: Duration(milliseconds: 700),
+                    delay: Duration(milliseconds: 800),
                     curve: Curves.easeIn,
                     child: RelegiousListTile(
-                      onTap: () {
-                        Get.to(IndivicualPost(
-                          appBarTitle: 'التحلل',
-                        ));
-                      },
+                      onTap: () {},
                       title: data.title,
                       subTitle: data.content,
-                      date: data.created,
                       image: data.cover,
+                      date: data.created,
                     ),
                   );
                 });
           }
-        });
-    //
+        }); //
   }
 }

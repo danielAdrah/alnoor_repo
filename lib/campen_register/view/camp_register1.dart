@@ -112,8 +112,9 @@ class _CampRegister1State extends State<CampRegister1> {
                         ),
                         const SizedBox(height: 11),
                         NumberTextField(
+                          controller: TextEditingController(),
                           labelText: "ادخل رقم جوالك",
-                          onChanged: (phoneNumber) {},
+                          // onChanged: (phoneNumber) {},
                         ),
                       ],
                     ),

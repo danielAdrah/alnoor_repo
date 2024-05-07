@@ -3,7 +3,7 @@ import 'package:elnoor_haj/support_chat/views/support_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../guidness/view/guidness_view.dart';
+import '../../guidnace/view/guidness_view.dart';
 import '../../main_screen/views/main_screen.dart';
 import '../../managment_chat/view/managment_chat.dart';
 import '../../relegious_works/view/relegious_work.dart';
