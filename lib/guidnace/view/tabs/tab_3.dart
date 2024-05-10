@@ -7,6 +7,7 @@ import '../../../comon_widgets/relegious_list_tile.dart';
 import '../../../core/api/dio_consumer.dart';
 import '../../../theme.dart';
 import '../../controller/guidnace_controller.dart';
+import '../single_post.dart';
 
 class Tab3 extends StatefulWidget {
   final String category;
@@ -41,7 +42,11 @@ class _Tab3State extends State<Tab3> {
                     delay: Duration(milliseconds: 800),
                     curve: Curves.easeIn,
                     child: RelegiousListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(SinglePost(
+                          appBarTitle: 'السعي',
+                        ));
+                      },
                       title: data.title,
                       subTitle: data.content,
                       image: data.cover,

@@ -46,10 +46,9 @@ dependencies:
   pin_code_text_field: ^1.8.0
   image_picker: ^1.1.0
   get_storage: ^2.1.1
-  geolocator: ^11.0.0
   im_stepper: ^1.0.1+1
   dio: ^5.4.3+1
-
+  geolocator: ^11.0.0
 
 dev_dependencies:
   flutter_test:

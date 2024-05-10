@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:animate_do/animate_do.dart';
 import 'package:elnoor_haj/support_chat/views/support_chat.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ import '../../managment_chat/view/managment_chat.dart';
 import '../../relegious_works/view/relegious_work.dart';
 import '../../seeking_counter/view/seeking_counter_view.dart';
 import '../../theme.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get_storage/get_storage.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});
@@ -18,9 +22,51 @@ class MainTabView extends StatefulWidget {
 }
 
 class _MainTabViewState extends State<MainTabView> {
+  final GetStorage storage = GetStorage();
   int selectTab = 0;
   PageStorageBucket pageStorageBucket = PageStorageBucket();
   Widget currentTabView = const MainScreen();
+  getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    print(serviceEnabled);
+    if (serviceEnabled == false) {
+      return AboutDialog(
+        children: [
+          Text("رجاء قم بتشغيل الموقع"),
+        ],
+      );
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        //here what will show if denied
+      }
+      if (permission == LocationPermission.deniedForever) {
+        //will display if denied for ever
+      }
+
+      if (permission == LocationPermission.whileInUse) {
+        Position position = await Geolocator.getCurrentPosition();
+        var long = position.longitude;
+        var alt = position.altitude;
+        print("-----------------------------");
+        print(long);
+        print(position.latitude);
+        storage.write("longitude", long);
+        storage.write("altitude", alt);
+        // later we need to store the longitude and latitude and send it to the api
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    getCurrentLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

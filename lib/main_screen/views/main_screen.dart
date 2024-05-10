@@ -23,6 +23,12 @@ class _MainScreenState extends State<MainScreen> {
   MainScreenController controller =
       Get.put(MainScreenController(api: DioConsumer(dio: Dio())));
 
+  Map<int, AlignmentGeometry> alignmentMap = {
+    0: Alignment(0.6, 2),
+    1: Alignment(-0.6, 0.8),
+    2: Alignment(0.6, 2),
+  };
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -54,113 +60,125 @@ class _MainScreenState extends State<MainScreen> {
                         image: const DecorationImage(
                             image: AssetImage("assets/img/weather_rec1.png"),
                             fit: BoxFit.fill)),
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, right: 50),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                    child: GetBuilder<MainScreenController>(
+                        init:
+                            MainScreenController(api: DioConsumer(dio: Dio())),
+                        builder: (controller) {
+                          return ListView(
                             children: [
-                              Text(
-                                "الضهر",
-                                style: TextStyle(
-                                    color: TColor.white, fontSize: 16),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 30, right: 50),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        controller.fetchPrayerTime();
+                                      },
+                                      child: Text(
+                                        "الضهر",
+                                        style: TextStyle(
+                                            color: TColor.white, fontSize: 16),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "${controller.times?.timings.fajr}",
+                                      style: TextStyle(
+                                          color: TColor.white, fontSize: 16),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "بتوقيت مكة المكرمة",
+                                      style: TextStyle(
+                                          color: TColor.white, fontSize: 14),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "12:30",
-                                style: TextStyle(
-                                    color: TColor.white, fontSize: 16),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "بتوقيت مكة المكرمة",
-                                style: TextStyle(
-                                    color: TColor.white, fontSize: 14),
+                              const Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "العشاء",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                      Text(
+                                        "7:30",
+                                        style: TextStyle(color: TColor.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ],
-                          ),
-                        ),
-                        const Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "العشاء",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                                Text(
-                                  "7:30",
-                                  style: TextStyle(color: TColor.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          );
+                        }),
                   ),
                 ),
               ),
@@ -180,148 +198,173 @@ class _MainScreenState extends State<MainScreen> {
               ),
               const SizedBox(height: 20),
               Container(
-                alignment: Alignment.topCenter,
-                height: media.height,
-                // width: media.width,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/img/steps.png"),
-                        alignment: Alignment(-0.02, -0.6))),
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    FadeInRight(
-                      delay: const Duration(milliseconds: 700),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: const Alignment(0.6, 2),
-                            child: StepCircle(
-                              index: "1",
-                              title: "الإحرام",
-                              onTap: () {},
-                            ),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(0.44, 2),
-                            child: Text("النية"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(0.79, 2),
-                            child: Text("الاغتسال"),
-                          ),
-                          // const SizedBox(height: 2),
-                          const Align(
-                            alignment: Alignment(0.4, 1.8),
-                            child: Text("لبس الإحرام"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(0.9, 2),
-                            child: Text("صلاة ركعتين"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(0.3, 2),
-                            child: Text(" قول " "لبيك اللهم لبيك"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FadeInLeft(
-                      delay: const Duration(milliseconds: 700),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: const Alignment(-0.6, 0.8),
-                            child: StepCircle(
-                              index: "2",
-                              title: "الطواف",
-                              onTap: () {},
-                            ),
-                          ),
-                          // const SizedBox(height: 2),
-                          const Align(
-                            alignment: Alignment(-0.7, 1.5),
-                            child: Text("النية"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(-0.27, 1.5),
-                            child: Text("الوقوف أمام الحجر الأسود"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(-0.84, 1.5),
-                            child: Text(" الإضطباع"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(-0.45, 1.5),
-                            child: Text(" بداية الطواف"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FadeInRight(
-                      delay: const Duration(milliseconds: 700),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: const Alignment(0.6, 2),
-                            child: StepCircle(
-                              index: "3",
-                              title: "السعي",
-                              onTap: () {},
-                            ),
-                          ),
-                          // const SizedBox(height: 2),
-                          const Align(
-                            alignment: Alignment(0.65, 2),
-                            child: Text("النية"),
-                          ),
-                          // const SizedBox(height: 3),
-                          const Align(
-                            alignment: Alignment(0.03, 2),
-                            child: Text("   السعي بين الصفاة و المروة 7 مرات"),
-                          ),
-                          // const SizedBox(height: 3),
-                        ],
-                      ),
-                    ),
-                    FadeInLeft(
-                      delay: const Duration(milliseconds: 700),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: const Alignment(-0.6, 2),
-                            child: StepCircle(
-                              index: "4",
-                              title: "التحلل",
-                              onTap: () {},
-                            ),
-                          ),
-                          // const SizedBox(height: 2),
-                          const Align(
-                            alignment: Alignment(-0.35, 2),
-                            child: Text("حلق كامل أو حلق تقصير",
-                                style: TextStyle(fontSize: 12)),
-                          ),
-                          const Align(
-                            alignment: Alignment(-0.4, 2),
-                            child: Text("التحلل من الاحرام ",
-                                style: TextStyle(fontSize: 12)),
-                          ),
-                          // const SizedBox(height: 3),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  alignment: Alignment.topCenter,
+                  height: media.height,
+                  // width: media.width,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/img/steps.png"),
+                          alignment: Alignment(-0.02, -0.6))),
+                  child: FutureBuilder(
+                      future: controller.fetchStep(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                            color: TColor.primary,
+                          ));
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data![index];
+                              return Column(
+                                children: [
+                                  FadeInRight(
+                                    delay: const Duration(milliseconds: 700),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: alignmentMap[index] ??
+                                              Alignment.center,
+                                          child: StepCircle(
+                                            index: "1",
+                                            title: "${data.name}",
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                        // const SizedBox(height: 3),
+                                        const Align(
+                                          alignment: Alignment(0.44, 2),
+                                          child: Text("النية"),
+                                        ),
+                                        // const SizedBox(height: 3),
+                                        const Align(
+                                          alignment: Alignment(0.79, 2),
+                                          child: Text("الاغتسال"),
+                                        ),
+                                        // const SizedBox(height: 2),
+                                        const Align(
+                                          alignment: Alignment(0.4, 1.8),
+                                          child: Text("لبس الإحرام"),
+                                        ),
+                                        // const SizedBox(height: 3),
+                                        const Align(
+                                          alignment: Alignment(0.9, 2),
+                                          child: Text("صلاة ركعتين"),
+                                        ),
+                                        // const SizedBox(height: 3),
+                                        const Align(
+                                          alignment: Alignment(0.3, 2),
+                                          child:
+                                              Text(" قول " "لبيك اللهم لبيك"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // FadeInLeft(
+                                  //   delay: const Duration(milliseconds: 700),
+                                  //   child: Column(
+                                  //     children: [
+                                  //       Align(
+                                  //         alignment: const Alignment(-0.6, 0.8),
+                                  //         child: StepCircle(
+                                  //           index: "2",
+                                  //           title: "الطواف",
+                                  //           onTap: () {},
+                                  //         ),
+                                  //       ),
+                                  //       // const SizedBox(height: 2),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.7, 1.5),
+                                  //         child: Text("النية"),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.27, 1.5),
+                                  //         child:
+                                  //             Text("الوقوف أمام الحجر الأسود"),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.84, 1.5),
+                                  //         child: Text(" الإضطباع"),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.45, 1.5),
+                                  //         child: Text(" بداية الطواف"),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  // FadeInRight(
+                                  //   delay: const Duration(milliseconds: 700),
+                                  //   child: Column(
+                                  //     children: [
+                                  //       Align(
+                                  //         alignment: const Alignment(0.6, 2),
+                                  //         child: StepCircle(
+                                  //           index: "3",
+                                  //           title: "السعي",
+                                  //           onTap: () {},
+                                  //         ),
+                                  //       ),
+                                  //       // const SizedBox(height: 2),
+                                  //       const Align(
+                                  //         alignment: Alignment(0.65, 2),
+                                  //         child: Text("النية"),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //       const Align(
+                                  //         alignment: Alignment(0.03, 2),
+                                  //         child: Text(
+                                  //             "   السعي بين الصفاة و المروة 7 مرات"),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //     ],
+                                  //   ),
+                                  // ),
+
+                                  // FadeInLeft(
+                                  //   delay: const Duration(milliseconds: 700),
+                                  //   child: Column(
+                                  //     children: [
+                                  //       Align(
+                                  //         alignment: const Alignment(-0.6, 2),
+                                  //         child: StepCircle(
+                                  //           index: "4",
+                                  //           title: "التحلل",
+                                  //           onTap: () {},
+                                  //         ),
+                                  //       ),
+                                  //       // const SizedBox(height: 2),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.35, 2),
+                                  //         child: Text("حلق كامل أو حلق تقصير",
+                                  //             style: TextStyle(fontSize: 12)),
+                                  //       ),
+                                  //       const Align(
+                                  //         alignment: Alignment(-0.4, 2),
+                                  //         child: Text("التحلل من الاحرام ",
+                                  //             style: TextStyle(fontSize: 12)),
+                                  //       ),
+                                  //       // const SizedBox(height: 3),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      })),
             ],
           ),
         ),

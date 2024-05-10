@@ -37,10 +37,17 @@ class ReligousPostController extends GetxController {
       // var response = await api.get(
       //   EndPoint.getReligousPost(category.toString()),
       // );
-
-      var response = await dio.get(EndPoint.religousPost, queryParameters: {
-        "category_name": category,
-      });
+      var accessToken = storage.read("accessToken");
+      print("the token ${accessToken}");
+      var response = await dio.get(
+        EndPoint.religousPost,
+        queryParameters: {
+          "category_name": category,
+        },
+        options: Options(
+          headers: {"Authorization": "Bearer ${accessToken}"},
+          ),
+      );
 
       print(response.data);
 

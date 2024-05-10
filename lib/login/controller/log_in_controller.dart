@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:elnoor_haj/core/api/end_points.dart';
 import 'package:elnoor_haj/core/errors/exceptions.dart';
 import 'package:flutter/material.dart';
@@ -29,15 +31,24 @@ class LogInController extends GetxController {
         data: {
           ApiKeys.username: numberController.text,
           ApiKeys.password: passController.text,
+          "device_token":
+              "sdsdsdsdsdsdshkjhjjhjhjhjhjhjhjkjkjkjkjkjkkkkffffffffffffffffffffffffffffffffffffffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeekkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkdd",
         },
       );
+      print("the info you need are ${response}");
       logInUser = LogInModel.fromJson(response);
       final logInAccessToken = logInUser!.tokens.access;
       final logInRefrechToken = logInUser!.tokens.refresh;
-      final logInId = logInUser!.id;
+      final userId = logInUser!.userId;
+      final pilgrimId = logInUser!.pilgrimId;
+      final guideChatId = logInUser!.guideChatId;
+      final managerChatId = logInUser!.managerChatId;
       storage.write("accessToken", logInAccessToken);
       storage.write("refreshToken", logInRefrechToken);
-      storage.write("id", logInId);
+      storage.write("userId", userId);
+      storage.write("pilgramId", pilgrimId);
+      storage.write("guideChatId", guideChatId);
+      storage.write("ManagerChatId", managerChatId);
 
       userState = LogInSuccess();
       update();

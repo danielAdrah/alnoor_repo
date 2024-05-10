@@ -104,8 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 delay: Duration(milliseconds: 600),
                                 child: IconPrimaryButton(
                                   onTap: () {
-                                    // Get.to(CampRegister());
-                                    Get.to(MainTabView());
+                                    Get.to(CampRegister());
+                                    // Get.to(MainTabView());
                                   },
                                   text: "بدء",
                                   icon: Icons.arrow_forward,

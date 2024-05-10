@@ -44,3 +44,14 @@ final class OnePostFailure extends UserState {
 
   OnePostFailure({required this.errMessage});
 }
+
+final class OnInfoSuccess extends UserState {}
+
+final class OnInfoLoading extends UserState {}
+
+final class OnInfoFailure extends UserState {
+  final String errMessage;
+
+  OnInfoFailure({required this.errMessage});
+  //============================================
+}

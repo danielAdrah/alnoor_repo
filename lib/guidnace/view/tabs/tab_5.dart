@@ -7,6 +7,7 @@ import '../../../comon_widgets/relegious_list_tile.dart';
 import '../../../core/api/dio_consumer.dart';
 import '../../../theme.dart';
 import '../../controller/guidnace_controller.dart';
+import '../single_post.dart';
 
 class Tab5 extends StatefulWidget {
   final String category;
@@ -26,7 +27,7 @@ class _Tab5State extends State<Tab5> {
         future: controller.getGuidPost(widget.category),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
                 child: CircularProgressIndicator(
               color: TColor.primary,
             ));
@@ -38,10 +39,15 @@ class _Tab5State extends State<Tab5> {
                 itemBuilder: (context, index) {
                   var data = snapshot.data![index];
                   return ZoomIn(
-                    delay: Duration(milliseconds: 800),
+                    delay: const Duration(milliseconds: 800),
                     curve: Curves.easeIn,
                     child: RelegiousListTile(
-                      onTap: () {},
+                      onTap: () {
+                        // controller.fetchGuidnacePost();
+                        Get.to(SinglePost(
+                          appBarTitle: 'اللإحرام',
+                        ));
+                      },
                       title: data.title,
                       subTitle: data.content,
                       image: data.cover,

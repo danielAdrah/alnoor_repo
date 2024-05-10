@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'main_tab_view/view/main_tab_view.dart';
 import 'splash&&onboarding/view/splash_screen.dart';
 
 void main() async {
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: MainTabView(),
+      // SplashScreen(),
     );
   }
 }

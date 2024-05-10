@@ -11,32 +11,40 @@ String logInModelToJson(LogInModel data) => json.encode(data.toJson());
 
 class LogInModel {
   String username;
-  int chatId;
+  int guideChatId;
+  int managerChatId;
   String image;
-  int id;
+  int userId;
+  int pilgrimId;
   Tokens tokens;
 
   LogInModel({
     required this.username,
-    required this.chatId,
+    required this.guideChatId,
+    required this.managerChatId,
     required this.image,
-    required this.id,
+    required this.userId,
+    required this.pilgrimId,
     required this.tokens,
   });
 
   factory LogInModel.fromJson(Map<String, dynamic> json) => LogInModel(
         username: json["username"],
-        chatId: json["chat_id"],
+        guideChatId: json["guide_chat_id"],
+        managerChatId: json["manager_chat_id"],
         image: json["image"],
-        id: json["id"],
+        userId: json["user_id"],
+        pilgrimId: json["pilgrim_id"],
         tokens: Tokens.fromJson(json["tokens"]),
       );
 
   Map<String, dynamic> toJson() => {
         "username": username,
-        "chat_id": chatId,
+        "guide_chat_id": guideChatId,
+        "manager_chat_id": managerChatId,
         "image": image,
-        "id": id,
+        "user_id": userId,
+        "pilgrim_id": pilgrimId,
         "tokens": tokens.toJson(),
       };
 }
