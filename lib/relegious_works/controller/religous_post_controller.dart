@@ -46,7 +46,7 @@ class ReligousPostController extends GetxController {
         },
         options: Options(
           headers: {"Authorization": "Bearer ${accessToken}"},
-          ),
+        ),
       );
 
       print(response.data);
@@ -80,12 +80,18 @@ class ReligousPostController extends GetxController {
   Future<IndiviualReligiousModel> fetchReligiousPost() async {
     try {
       userState.value = OnePostLoading();
+      var accessToken = storage.read("accessToken");
       var stored = await storage.read("workPostsId");
       print("stored is ${stored}");
 
       print("before response");
       var response = await dio.get(
         EndPoint.getindiviualReligiousPost(stored),
+        options: Options(
+          headers: {
+            ApiKeys.auth : "Bearer $accessToken",
+          }
+        ),
       );
       print("the answer from everyone is ${response.data}");
       IndiviualReligiousModel singlePost =

@@ -7,20 +7,24 @@ class EndPoint {
   static String getindiviualReligiousPost(id) {
     return "religious-post/$id";
   }
+
   static String indiviualGuidenacePost = "guidance-post/";
   static String getindiviualGuidnacePost(id) {
     return "guidance-post/$id";
   }
+
   static String pilgrimInfo = "get-pilgrim/";
   static String getPilgrimInfo(pilgremId) {
     return "get-pilgrim/$pilgremId";
   }
+
   static String listSteps = "list-steps/";
   static String prayerTime = "prayers-timings/";
-
 }
 
 class ApiKeys {
+  static String auth = "Authorization";
+
   static String username = "username";
   static String password = "password";
   static String deviceId = "device_token";

@@ -25,7 +25,7 @@ class MainScreenController extends GetxController {
   String? stepName;
   int? stepId;
   List<SecondaryStep> secondarSteps = [];
-  List<StepsModel> finalStep = [];
+  RxList<StepsModel> finalStep = <StepsModel>[].obs;
   PrayerTimeModel? times;
 //============================================
 
@@ -34,12 +34,14 @@ class MainScreenController extends GetxController {
       var response = await dio.get(
         EndPoint.listSteps,
       );
-      print("the response is ${response.data}");
+      print("the response from steps is ${response.data}");
       List<dynamic> jsonResponse = response.data;
-      List<StepsModel> steps =
+      // List<StepsModel> steps
+      finalStep.value =
           jsonResponse.map((e) => StepsModel.fromJson(e)).toList();
-
-      return steps;
+      // finalStep.value = steps;
+      print("loook here ${finalStep.length}");
+      return finalStep;
     } on ServerExcption catch (e) {
       print("error");
       throw Exception(
