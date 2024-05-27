@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import '../../comon_widgets/custom_app_bar.dart';
 
-class SeekingCounterView extends StatefulWidget {
-  const SeekingCounterView({super.key});
+class SeekingCounterView2 extends StatefulWidget {
+  const SeekingCounterView2({super.key});
 
   @override
-  State<SeekingCounterView> createState() => _SeekingCounterViewState();
+  State<SeekingCounterView2> createState() => _SeekingCounterView2State();
 }
 
-class _SeekingCounterViewState extends State<SeekingCounterView> {
-  int sum = 0;
+class _SeekingCounterView2State extends State<SeekingCounterView2> {
+  int sum1 = 0;
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -38,7 +38,7 @@ class _SeekingCounterViewState extends State<SeekingCounterView> {
                         color: Colors.black12,
                         borderRadius: BorderRadius.circular(25)),
                     child: Text(
-                      "$sum : عدد الطواف ",
+                      "$sum1 : عدد السعي ",
                       style: const TextStyle(
                           color: TColor.primary,
                           fontSize: 20,
@@ -51,7 +51,7 @@ class _SeekingCounterViewState extends State<SeekingCounterView> {
               ZoomIn(
                 delay: Duration(milliseconds: 700),
                 child: Text(
-                  "انقر على الدائرة في كل طواف",
+                  "انقر على الدائرة في كل سعي",
                   style: TextStyle(
                       color: TColor.black.withOpacity(0.5), fontSize: 18),
                 ),
@@ -63,7 +63,7 @@ class _SeekingCounterViewState extends State<SeekingCounterView> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      sum++;
+                      sum1++;
                     });
                   },
                   child: const CircleAvatar(
@@ -77,7 +77,7 @@ class _SeekingCounterViewState extends State<SeekingCounterView> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    sum = 0;
+                    sum1 = 0;
                   });
                 },
                 child: FadeInUp(

@@ -6,11 +6,18 @@ class StepCircle extends StatelessWidget {
   String index;
   String title;
   Function()? onTap;
-  StepCircle(
-      {super.key,
-      required this.index,
-      required this.title,
-      required this.onTap});
+  Color borderColor;
+  Color color;
+  Color textColor;
+  StepCircle({
+    super.key,
+    required this.index,
+    required this.title,
+    required this.onTap,
+    required this.color,
+    required this.borderColor,
+    required this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +28,15 @@ class StepCircle extends StatelessWidget {
           child: Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-                color: TColor.primary,
+            decoration: BoxDecoration(
+                color: color,
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: TColor.primary, blurRadius: 3)]),
+                boxShadow: [BoxShadow(color: TColor.primary, blurRadius: 3)],
+                border: Border.all(color: borderColor)),
             child: Center(
                 child: Text(
               index,
-              style: TextStyle(color: TColor.white),
+              style: TextStyle(color: textColor),
             )),
           ),
         ),

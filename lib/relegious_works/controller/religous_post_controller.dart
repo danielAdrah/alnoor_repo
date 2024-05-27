@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../login/model/token_model.dart';
 import '../../login/model/user_state.dart';
 import '../model/indivicual_religious_model.dart';
 import '../model/religious_post_model.dart';
@@ -50,22 +51,36 @@ class ReligousPostController extends GetxController {
       );
 
       print(response.data);
+      List<ReligiousPostModel> posts = [];
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        List<dynamic> jsonResponse = response.data;
+        print("loook at meeeeee $jsonResponse");
+        posts =
+            jsonResponse.map((e) => ReligiousPostModel.fromJson(e)).toList();
+        // List postIds = [];
+        var id;
+        for (var post in posts) {
+          var postId = post.id;
+          // postIds.add(postId);
+          id = postId;
+        }
+        print("out of the loop $id");
+        await storage.write("workPostsId", id);
 
-      List<dynamic> jsonResponse = response.data;
-      print("loook at meeeeee $jsonResponse");
-      List<ReligiousPostModel> posts =
-          jsonResponse.map((e) => ReligiousPostModel.fromJson(e)).toList();
-      // List postIds = [];
-      var id;
-      for (var post in posts) {
-        var postId = post.id;
-        // postIds.add(postId);
-        id = postId;
+        return posts;
       }
-      print("out of the loop $id");
-      await storage.write("workPostsId", id);
-
+      if (response.statusCode == 401) {
+        var refreshToken = storage.read("refreshToken");
+        var getToken = await dio.post(EndPoint.refreshToken, data: {
+          "refresh": refreshToken,
+        });
+        Token newToken = Token.fromJson(getToken.data);
+        storage.write("accessToken", newToken.access);
+        storage.write("refreshToken", newToken.refresh);
+        getPost(category);
+      }
       return posts;
+
       // return jsonResponse.map((e) => ReligiousPostModel.fromJson(e)).toList();
     } on ServerExcption catch (e) {
       userState.value =
@@ -87,11 +102,9 @@ class ReligousPostController extends GetxController {
       print("before response");
       var response = await dio.get(
         EndPoint.getindiviualReligiousPost(stored),
-        options: Options(
-          headers: {
-            ApiKeys.auth : "Bearer $accessToken",
-          }
-        ),
+        options: Options(headers: {
+          ApiKeys.auth: "Bearer $accessToken",
+        }),
       );
       print("the answer from everyone is ${response.data}");
       IndiviualReligiousModel singlePost =

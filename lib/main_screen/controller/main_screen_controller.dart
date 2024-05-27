@@ -31,17 +31,20 @@ class MainScreenController extends GetxController {
 
   Future<List<StepsModel>> fetchStep() async {
     try {
-      var response = await dio.get(
-        EndPoint.listSteps,
-      );
+      var token = storage.read("accessToken");
+      var response = await dio.get(EndPoint.listSteps,
+          options: Options(headers: {
+            ApiKeys.auth: "Bearer $token",
+          }));
       print("the response from steps is ${response.data}");
       List<dynamic> jsonResponse = response.data;
       // List<StepsModel> steps
-      finalStep.value =
+      List<StepsModel> steps =
           jsonResponse.map((e) => StepsModel.fromJson(e)).toList();
-      // finalStep.value = steps;
+      print("the steps are ${steps[1].name}");
+      finalStep.value = steps;
       print("loook here ${finalStep.length}");
-      return finalStep;
+      return steps;
     } on ServerExcption catch (e) {
       print("error");
       throw Exception(

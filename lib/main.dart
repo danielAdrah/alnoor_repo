@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainTabView(),
-      // SplashScreen(),
+      home: SplashScreen(),
+      
+      // MainTabView()
     );
   }
 }

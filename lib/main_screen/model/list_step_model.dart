@@ -4,54 +4,50 @@
 
 import 'dart:convert';
 
-List<StepsModel> stepsModelFromJson(String str) =>
-    List<StepsModel>.from(json.decode(str).map((x) => StepsModel.fromJson(x)));
+List<StepsModel> stepsModelFromJson(String str) => List<StepsModel>.from(json.decode(str).map((x) => StepsModel.fromJson(x)));
 
-String stepsModelToJson(List<StepsModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String stepsModelToJson(List<StepsModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class StepsModel {
-  int id;
-  List<SecondaryStep> secondarySteps;
-  String name;
+    int id;
+    List<SecondaryStep> secondarySteps;
+    String name;
+    String note;
 
-  StepsModel({
-    required this.id,
-    required this.secondarySteps,
-    required this.name,
-  });
+    StepsModel({
+        required this.id,
+        required this.secondarySteps,
+        required this.name,
+        required this.note,
+    });
 
-  factory StepsModel.fromJson(Map<String, dynamic> json) => StepsModel(
+    factory StepsModel.fromJson(Map<String, dynamic> json) => StepsModel(
         id: json["id"],
-        secondarySteps: List<SecondaryStep>.from(
-            json["secondary_steps"].map((x) => SecondaryStep.fromJson(x))),
+        secondarySteps: List<SecondaryStep>.from(json["secondary_steps"].map((x) => SecondaryStep.fromJson(x))),
         name: json["name"],
-      );
+        note: json["note"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id": id,
-        "secondary_steps":
-            List<dynamic>.from(secondarySteps.map((x) => x.toJson())),
+        "secondary_steps": List<dynamic>.from(secondarySteps.map((x) => x.toJson())),
         "name": name,
-      };
+        "note": note,
+    };
 }
 
 class SecondaryStep {
-  String name;
-  String note;
+    String name;
 
-  SecondaryStep({
-    required this.name,
-    required this.note,
-  });
+    SecondaryStep({
+        required this.name,
+    });
 
-  factory SecondaryStep.fromJson(Map<String, dynamic> json) => SecondaryStep(
+    factory SecondaryStep.fromJson(Map<String, dynamic> json) => SecondaryStep(
         name: json["name"],
-        note: json["note"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "name": name,
-        "note": note,
-      };
+    };
 }

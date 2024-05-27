@@ -9,6 +9,7 @@ import '../../guidnace/view/guidness_view.dart';
 import '../../main_screen/views/main_screen.dart';
 import '../../managment_chat/view/managment_chat.dart';
 import '../../relegious_works/view/relegious_work.dart';
+import '../../seeking_counter/view/counter_view.dart';
 import '../../seeking_counter/view/seeking_counter_view.dart';
 import '../../theme.dart';
 import 'package:geolocator/geolocator.dart';
@@ -153,7 +154,7 @@ class _MainTabViewState extends State<MainTabView> {
                                 onPressed: () {
                                   setState(() {
                                     selectTab = 3;
-                                    currentTabView = const SeekingCounterView();
+                                    currentTabView = const CounterView();
                                   });
                                 },
                                 icon: Image.asset(

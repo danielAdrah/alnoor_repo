@@ -20,6 +20,7 @@ class EndPoint {
 
   static String listSteps = "list-steps/";
   static String prayerTime = "prayers-timings/";
+  static String refreshToken = "token/refresh/";
 }
 
 class ApiKeys {

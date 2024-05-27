@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'dart:ffi';
 
 import 'package:animate_do/animate_do.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../comon_widgets/custom_app_bar.dart';
+import '../../comon_widgets/step_button.dart';
 import '../../comon_widgets/step_circle.dart';
 import '../../core/api/dio_consumer.dart';
 import '../../theme.dart';
@@ -20,14 +23,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Color borderColor = TColor.primary;
+  Color color = Colors.green;
+  Color textColor = TColor.primary;
   MainScreenController controller =
       Get.put(MainScreenController(api: DioConsumer(dio: Dio())));
-
-  Map<int, AlignmentGeometry> alignmentMap = {
-    0: Alignment(0.6, 2),
-    1: Alignment(-0.6, 0.8),
-    2: Alignment(0.6, 2),
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -200,184 +200,491 @@ class _MainScreenState extends State<MainScreen> {
                 image: DecorationImage(
                     image: AssetImage("assets/img/steps.png"),
                     alignment: Alignment(-0.02, -0.6))),
-            child: Obx(
-              () => ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    Column(
-                      children: [
-                        FadeInRight(
-                          delay: const Duration(milliseconds: 700),
-                          child: Column(
+            child: FutureBuilder(
+                future: controller.fetchStep(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: TColor.primary,
+                    ));
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var data = snapshot.data![index];
+                        if (index == 0) {
+                          return Column(
                             children: [
                               Align(
                                 alignment: Alignment(0.6, 2),
                                 child: StepCircle(
+                                  textColor: textColor,
+                                  color: color,
+                                  borderColor: borderColor,
                                   index: "1",
-                                  title: "${controller.finalStep.length}",
+                                  title: data.name,
                                   onTap: () {
-                                    controller.fetchStep();
+                                    setState(() {
+                                      textColor = TColor.white;
+                                      color = TColor.primary;
+                                      borderColor = TColor.primary;
+                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: media.width * 0.4,
+                                              width: media.width * 0.4,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          70)),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                      height:
+                                                          media.width * 0.07),
+                                                  Text(
+                                                    data.note,
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  StepButton(
+                                                      title: "تم الانتهاء"),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }));
                                   },
                                 ),
                               ),
                               // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(0.44, 2),
-                                child: Text("النية"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(0.79, 2),
-                                child: Text("الاغتسال"),
-                              ),
-                              // const SizedBox(height: 2),
-                              const Align(
-                                alignment: Alignment(0.4, 1.8),
-                                child: Text("لبس الإحرام"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(0.9, 2),
-                                child: Text("صلاة ركعتين"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(0.3, 2),
-                                child: Text(" قول " "لبيك اللهم لبيك"),
-                              ),
+                              ...data.secondarySteps.asMap().entries.map((e) {
+                                int secondaryIndex = e.key;
+                                var secondaryStep = e.value;
+                                List<Widget> secondaryWidgets = [
+                                  Align(
+                                    alignment: secondaryIndex == 0
+                                        ? Alignment(0.44, 2)
+                                        : secondaryIndex == 1
+                                            ? Alignment(0.72, 2)
+                                            : Alignment(0.44, 2),
+                                    child: Text(secondaryStep.name),
+                                  )
+                                ];
+                                if (secondaryIndex !=
+                                    data.secondarySteps.length - 1) {
+                                  secondaryWidgets.add(SizedBox(height: 2));
+                                }
+                                return Column(children: secondaryWidgets);
+                              })
                             ],
-                          ),
-                        ),
-                        FadeInLeft(
-                          delay: const Duration(milliseconds: 700),
-                          child: Column(
+                          );
+                        }
+                        if (index == 1) {
+                          return Column(
                             children: [
                               Align(
-                                alignment: const Alignment(-0.6, 0.8),
+                                alignment: Alignment(-0.6, 0.8),
                                 child: StepCircle(
+                                  textColor: TColor.primary,
+                                  color: TColor.white,
+                                  borderColor: TColor.primary,
                                   index: "2",
-                                  title: "الطواف",
-                                  onTap: () {},
+                                  title: data.name,
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: media.width * 0.4,
+                                              width: media.width * 0.4,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          70)),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                      height:
+                                                          media.width * 0.07),
+                                                  Text(
+                                                    data.note,
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  StepButton(
+                                                      title: "تم الانتهاء"),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }));
+                                  },
                                 ),
                               ),
-                              // const SizedBox(height: 2),
-                              const Align(
-                                alignment: Alignment(-0.7, 1.5),
-                                child: Text("النية"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(-0.27, 1.5),
-                                child: Text("الوقوف أمام الحجر الأسود"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(-0.84, 1.5),
-                                child: Text(" الإضطباع"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(-0.45, 1.5),
-                                child: Text(" بداية الطواف"),
-                              ),
+                              ...data.secondarySteps.asMap().entries.map((e) {
+                                int secondaryIndex = e.key;
+                                var secondaryStep = e.value;
+                                List<Widget> secondaryWidgets = [
+                                  Align(
+                                    alignment: secondaryIndex == 0
+                                        ? Alignment(-0.8, 1.5)
+                                        : secondaryIndex == 1
+                                            ? Alignment(-0.27, 1.5)
+                                            : Alignment(-0.8, 1.5),
+                                    child: Text(secondaryStep.name),
+                                  )
+                                ];
+                                if (secondaryIndex !=
+                                    data.secondarySteps.length - 1) {
+                                  secondaryWidgets.add(SizedBox(height: 2));
+                                }
+                                return Column(children: secondaryWidgets);
+                              })
+
+                              // const Align(
+                              //   alignment: Alignment(-0.7, 1.5),
+                              //   child: Text("النية"),
+                              // ),
+                              // // const SizedBox(height: 3),
+                              // const Align(
+                              //   alignment: Alignment(-0.27, 1.5),
+                              //   child: Text("الوقوف أمام الحجر الأسود"),
+                              // ),
+                              // // const SizedBox(height: 3),
+                              // const Align(
+                              //   alignment: Alignment(-0.84, 1.5),
+                              //   child: Text(" الإضطباع"),
+                              // ),
+                              // // const SizedBox(height: 3),
+                              // const Align(
+                              //   alignment: Alignment(-0.45, 1.5),
+                              //   child: Text(" بداية الطواف"),
+                              // ),
                             ],
-                          ),
-                        ),
-                        FadeInRight(
-                          delay: const Duration(milliseconds: 700),
-                          child: Column(
+                          );
+                        }
+                        if (index == 2) {
+                          return Column(
                             children: [
                               Align(
                                 alignment: const Alignment(0.6, 2),
                                 child: StepCircle(
+                                  textColor: TColor.primary,
+                                  color: TColor.white,
+                                  borderColor: TColor.primary,
                                   index: "3",
-                                  title: "السعي",
-                                  onTap: () {},
+                                  title: data.name,
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: media.width * 0.4,
+                                              width: media.width * 0.4,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          70)),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                      height:
+                                                          media.width * 0.07),
+                                                  Text(
+                                                    data.note,
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  StepButton(
+                                                      title: "تم الانتهاء"),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }));
+                                  },
                                 ),
                               ),
-                              // const SizedBox(height: 2),
-                              const Align(
-                                alignment: Alignment(0.65, 2),
-                                child: Text("النية"),
-                              ),
-                              // const SizedBox(height: 3),
-                              const Align(
-                                alignment: Alignment(0.03, 2),
-                                child:
-                                    Text("   السعي بين الصفاة و المروة 7 مرات"),
-                              ),
+                              ...data.secondarySteps.asMap().entries.map((e) {
+                                int secondaryIndex = e.key;
+                                var secondaryStep = e.value;
+                                List<Widget> secondaryWidgets = [
+                                  Align(
+                                    alignment: secondaryIndex == 0
+                                        ? Alignment(0.4, 1.5)
+                                        : secondaryIndex == 1
+                                            ? Alignment(-0.27, 1.5)
+                                            : Alignment(0.4, 1.5),
+                                    child: Text(secondaryStep.name),
+                                  )
+                                ];
+                                if (secondaryIndex !=
+                                    data.secondarySteps.length - 1) {
+                                  secondaryWidgets.add(SizedBox(height: 2));
+                                }
+                                return Column(children: secondaryWidgets);
+                              })
+                              // const Align(
+                              //   alignment: Alignment(0.65, 2),
+                              //   child: Text("النية"),
+                              // ),
+                              // // const SizedBox(height: 3),
+                              // const Align(
+                              //   alignment: Alignment(0.03, 2),
+                              //   child:
+                              //       Text("   السعي بين الصفاة و المروة 7 مرات"),
+                              // ),
                               // const SizedBox(height: 3),
                             ],
-                          ),
-                        ),
-                        FadeInLeft(
-                          delay: const Duration(milliseconds: 700),
-                          child: Column(
+                          );
+                        }
+                        if (index == 3) {
+                          return Column(
                             children: [
                               Align(
                                 alignment: const Alignment(-0.6, 2),
                                 child: StepCircle(
+                                  textColor: TColor.primary,
+                                  color: TColor.white,
+                                  borderColor: TColor.primary,
                                   index: "4",
-                                  title: "التحلل",
-                                  onTap: () {},
+                                  title: data.name,
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: media.width * 0.4,
+                                              width: media.width * 0.4,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          70)),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                      height:
+                                                          media.width * 0.07),
+                                                  Text(
+                                                    data.note,
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  StepButton(
+                                                      title: "تم الانتهاء"),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }));
+                                  },
                                 ),
                               ),
-                              // const SizedBox(height: 2),
-                              const Align(
-                                alignment: Alignment(-0.35, 2),
-                                child: Text("حلق كامل أو حلق تقصير",
-                                    style: TextStyle(fontSize: 12)),
-                              ),
-                              const Align(
-                                alignment: Alignment(-0.4, 2),
-                                child: Text("التحلل من الاحرام ",
-                                    style: TextStyle(fontSize: 12)),
-                              ),
+                              ...data.secondarySteps.asMap().entries.map((e) {
+                                int secondaryIndex = e.key;
+                                var secondaryStep = e.value;
+                                List<Widget> secondaryWidgets = [
+                                  Align(
+                                    alignment: secondaryIndex == 0
+                                        ? Alignment(-0.75, 1.5)
+                                        : secondaryIndex == 1
+                                            ? Alignment(-0.48, 1.5)
+                                            : Alignment(-0.75, 1.5),
+                                    child: Text(secondaryStep.name),
+                                  )
+                                ];
+                                if (secondaryIndex !=
+                                    data.secondarySteps.length - 1) {
+                                  secondaryWidgets.add(SizedBox(height: 2));
+                                }
+                                return Column(children: secondaryWidgets);
+                              })
+                              // const Align(
+                              //   alignment: Alignment(-0.35, 2),
+                              //   child: Text("حلق كامل أو حلق تقصير",
+                              //       style: TextStyle(fontSize: 12)),
+                              // ),
+                              // const Align(
+                              //   alignment: Alignment(-0.4, 2),
+                              //   child: Text("التحلل من الاحرام ",
+                              //       style: TextStyle(fontSize: 12)),
+                              // ),
                               // const SizedBox(height: 3),
                             ],
-                          ),
-                        ),
-                      ],
-                    )
-                  ]),
-            ),
+                          );
+                        }
+
+                        return Column(
+                          children: [
+                            Align(
+                              alignment: Alignment(0.6, -5),
+                              child: StepCircle(
+                                textColor: TColor.primary,
+                                color: TColor.white,
+                                borderColor: TColor.primary,
+                                index: "1",
+                                title: data.name,
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: ((context) {
+                                        return AlertDialog(
+                                          content: Container(
+                                            height: media.width * 0.4,
+                                            width: media.width * 0.4,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(70)),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                    height: media.width * 0.07),
+                                                Text(
+                                                  data.note,
+                                                  textAlign: TextAlign.end,
+                                                ),
+                                                SizedBox(height: 10),
+                                                StepButton(
+                                                    title: "تم الانتهاء"),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }));
+                                },
+                              ),
+                            ),
+                            // const SizedBox(height: 3),
+                            ...data.secondarySteps.asMap().entries.map((e) {
+                              int secondaryIndex = e.key;
+                              var secondaryStep = e.value;
+                              List<Widget> secondaryWidgets = [
+                                Align(
+                                  alignment: secondaryIndex == 0
+                                      ? Alignment(0.44, 2)
+                                      : secondaryIndex == 1
+                                          ? Alignment(0.72, 2)
+                                          : Alignment(0.44, 2),
+                                  child: Text(secondaryStep.name),
+                                )
+                              ];
+                              if (secondaryIndex !=
+                                  data.secondarySteps.length - 1) {
+                                secondaryWidgets.add(SizedBox(height: 2));
+                              }
+                              return Column(children: secondaryWidgets);
+                            })
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }),
           ),
         ]),
       ),
     ));
   }
-
-  // void Function()? onPressed;
-
-  // void showDialog(onPressed) {
-  //   Get.defaultDialog(
-  //     backgroundColor:
-  //         Colors.transparent, // Make the dialog background transparent
-  //     // barrierColor: Colors.black.withOpacity(0.5), // Optional: Adjust the opacity of the barrier color
-  //     title: "Choose an Option",
-  //     content: Material(
-  //       color: Colors.transparent, // Make the Material widget transparent
-  //       child: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           TextButton(
-  //             onPressed: () {
-  //               onPressed;
-  //               Get.back(); // Close the dialog
-  //             },
-  //             child: Text("Toggle isDoneIhram"),
-  //           ),
-  //           // Add more buttons as needed
-  //         ],
-  //       ),
-  //     ),
-  //     confirm: TextButton(
-  //       onPressed: () {
-  //         Get.back(); // Close the dialog
-  //       },
-  //       child: Text("Close"),
-  //     ),
-  //   );
-  // }
 }
+
+// FadeInLeft(
+                    //   delay: const Duration(milliseconds: 700),
+                    //   child: Column(
+                    //     children: [
+                    //       Align(
+                    //         alignment: const Alignment(-0.6, 0.8),
+                    //         child: StepCircle(
+                    //           index: "2",
+                    //           title: "الطواف",
+                    //           onTap: () {},
+                    //         ),
+                    //       ),
+                    //       // const SizedBox(height: 2),
+                          // const Align(
+                          //   alignment: Alignment(-0.7, 1.5),
+                          //   child: Text("النية"),
+                          // ),
+                          // // const SizedBox(height: 3),
+                          // const Align(
+                          //   alignment: Alignment(-0.27, 1.5),
+                          //   child: Text("الوقوف أمام الحجر الأسود"),
+                          // ),
+                          // // const SizedBox(height: 3),
+                          // const Align(
+                          //   alignment: Alignment(-0.84, 1.5),
+                          //   child: Text(" الإضطباع"),
+                          // ),
+                          // // const SizedBox(height: 3),
+                          // const Align(
+                          //   alignment: Alignment(-0.45, 1.5),
+                          //   child: Text(" بداية الطواف"),
+                          // ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // FadeInRight(
+                    //   delay: const Duration(milliseconds: 700),
+                      // child: Column(
+                      //   children: [
+                      //     Align(
+                      //       alignment: const Alignment(0.6, 2),
+                      //       child: StepCircle(
+                      //         index: "3",
+                      //         title: "السعي",
+                      //         onTap: () {},
+                      //       ),
+                      //     ),
+                      //     // const SizedBox(height: 2),
+                      //     const Align(
+                      //       alignment: Alignment(0.65, 2),
+                      //       child: Text("النية"),
+                      //     ),
+                      //     // const SizedBox(height: 3),
+                      //     const Align(
+                      //       alignment: Alignment(0.03, 2),
+                      //       child:
+                      //           Text("   السعي بين الصفاة و المروة 7 مرات"),
+                      //     ),
+                      //     // const SizedBox(height: 3),
+                      //   ],
+                      // ),
+                    // ),
+                    // FadeInLeft(
+                    //   delay: const Duration(milliseconds: 700),
+                      // child: Column(
+                      //   children: [
+                      //     Align(
+                      //       alignment: const Alignment(-0.6, 2),
+                      //       child: StepCircle(
+                      //         index: "4",
+                      //         title: "التحلل",
+                      //         onTap: () {},
+                      //       ),
+                      //     ),
+                      //     // const SizedBox(height: 2),
+                      //     const Align(
+                      //       alignment: Alignment(-0.35, 2),
+                      //       child: Text("حلق كامل أو حلق تقصير",
+                      //           style: TextStyle(fontSize: 12)),
+                      //     ),
+                      //     const Align(
+                      //       alignment: Alignment(-0.4, 2),
+                      //       child: Text("التحلل من الاحرام ",
+                      //           style: TextStyle(fontSize: 12)),
+                      //     ),
+                      //     // const SizedBox(height: 3),
+                      //   ],
+                      // ),
+                    // ),
